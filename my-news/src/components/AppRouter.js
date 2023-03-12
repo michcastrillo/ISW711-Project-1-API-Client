@@ -6,6 +6,7 @@ import Categories from './Categories'
 import CategoriesEditing from './CategoriesEditing'
 import NewsEditing from './NewsEditing'
 import NewsSources from './NewsSources'
+import Home from './Home'
 const AppRouter = () => {
   return (
     <>
@@ -17,6 +18,7 @@ const AppRouter = () => {
             <Route path='/categoriesEditing' element={<CategoriesEditing/>}/>
             <Route path='/newsEditing' element={<NewsEditing/>}/>
             <Route path='/newsSources' element={<NewsSources/>}/>
+            <Route path='/home' element={<Home/>}/>
         </Routes>
        </BrowserRouter>
 
