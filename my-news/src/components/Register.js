@@ -1,21 +1,134 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../styles/register.css'
 
+const userData = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  addressOne: "",
+  addressTwo: "",
+  country: "",
+  city: "",
+  postalCode: "",
+  phoneNumber: 0,
+  role: "user"
+}
 const Register = () => {
+  const navigate = useNavigate();
+  const [register, setRegister] = useState(userData);
+  const [error, setError] = useState({});
+  const [errorServer, setErrorServer] = useState("");
+  
+ 
+
+  const handleChangeInput = (e) => {
+    setRegister({
+      ...register,
+      [e.target.name]: e.target.value
+    });
+  }
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const errors = validateForm(register);
+    //Valida se encuentran errores
+    if (Object.keys(errors).length === 0) {
+      console.log("Sin error");
+      console.log(register);
+      axios.post("http://localhost:4000/api/user/",{
+        firstName: register.firstName,
+        lastName: register.lastName,
+        email: register.email,
+        password: register.password,
+        addressOne: register.addressOne,
+        addressTwo: register.addressOne,
+        country: register.addressTwo,
+        city: register.city,
+        postalCode: register.postalCode,
+        phoneNumber: parseInt(register.phoneNumber),
+        role: register.role
+      },{
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        navigate("/login")
+
+      })
+      .catch((err)=>{
+        if(err.response.status === 403) setErrorServer(err.response.data.error);
+        console.log(err.response.data.error)
+        console.log(err.response.status);
+      })
+    } else {
+      setError(errors);
+      console.log(errors)
+    }
+  }
+
+  const validateForm = (values) => {
+    let errors = {};
+
+    if (!values.firstName) {
+      errors.firstName = "First name is required";
+    }
+    if (!values.lastName) {
+      errors.lastName = "Last name is required";
+    }
+    if (!values.password) {
+      errors.password = "Password is required";
+    }
+    if (!values.addressOne) {
+      errors.addressOne = "Address is required";
+    }
+    if (!values.addressTwo) {
+      errors.addressTwo = "Address 2 is required";
+    }
+    if (!values.country) {
+      errors.country = "Country is required";
+    }
+    if (!values.email) {
+      errors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+      errors.email = "Email is invalid";
+    }
+    if (!values.city) {
+      errors.city = "City is required";
+    }
+    if (!values.postalCode) {
+      errors.postalCode = "Zip/Postal Code is required";
+    }
+    if (!values.phoneNumber) {
+      errors.phoneNumber = "Phone number is required";
+    } else if (!/^\d+$/.test(values.phoneNumber)) {
+      errors.phoneNumber = "Phone number is invalid";
+    }
+    return errors;
+  };
 
   return (
     <div className='wrapper'>
-        <h1>User Registration</h1>
+      <form>
+      <h1>User Registration</h1>
         <p>----------------------------------------------------------------------</p>
-        <input className="input_register" type="text"  placeholder="First Name" required/>
-        <input className="input_register"  type="text" placeholder="Last Name" required/><br/>
-        <input className="input_register" type="email" name="user_email" placeholder="Email Address" required/>
-        <input className="input_register" type="password" placeholder="Password" required/><br/>
-        <input className="addresses" type="text" placeholder="Address" required/><br/>
-        <input className="addresses" type="text" placeholder="Address 2" required/><br/>
-        <select id="country_select">
+        <input className="input_register" type="text"  placeholder="First Name" name='firstName' onChange={handleChangeInput} required/>
+        {error.firstName && <div>{error.firstName}</div>}
+        <input className="input_register"  type="text" placeholder="Last Name" name='lastName' onChange={handleChangeInput} required/><br/>
+        {error.lastName && <div>{error.lastName}</div>}
+        <input className="input_register" type="email" placeholder="Email Address" name="email" onChange={handleChangeInput} required/>
+        {error.email && <div>{error.email}</div>}
+        <input className="input_register" type="password" placeholder="Password" name="password" onChange={handleChangeInput} required/><br/>
+        {error.password && <div>{error.password}</div>}
+        <input className="addresses" type="text" placeholder="Address" name="addressOne" onChange={handleChangeInput} required/><br/>
+        {error.addressOne && <div>{error.addressOne}</div>}
+        <input className="addresses" type="text" placeholder="Address 2" name="addressTwo" onChange={handleChangeInput} required/><br/>
+        {error.addressTwo && <div>{error.addressTwo}</div>}
+        <select id="country_select" name='country' onChange={handleChangeInput}>
             <option>Country</option>
             <option>Argentina</option>
             <option>Bolivia</option>
@@ -44,11 +157,17 @@ const Register = () => {
             <option>Uruguay</option>
             <option>Venezuela</option>
         </select>
-        <input className="input_register" type="text" placeholder="City"required/><br/>
-        <input className="input_register" type="text" placeholder="Zip/Postal Code"  required/>
-        <input className="input_register" type="text" placeholder="Phone Number" required/>
-        <p>----------------------------------------------------------------------</p>    
-        <button id="b_buscador">Sign up</button>
+        {error.country && <div>{error.country}</div>}
+        <input className="input_register" type="text" placeholder="City" name="city" onChange={handleChangeInput} required/><br/>
+        {error.city && <div>{error.city}</div>}
+        <input className="input_register" type="text" placeholder="Zip/Postal Code" name="postalCode" onChange={handleChangeInput}  required/>
+        {error.postalCode && <div>{error.postalCode}</div>}
+        <input className="input_register" type="tel" placeholder="Phone Number" name="phoneNumber" onChange={handleChangeInput} required/>
+        {error.phoneNumber && <div>{error.phoneNumber}</div>}
+        <p>----------------------------------------------------------------------</p> 
+        {errorServer && <div>{errorServer}</div>}
+        <button id="b_buscador" onClick={handleRegister}>Sign up</button>
+      </form>
     </div>
   )
 }
