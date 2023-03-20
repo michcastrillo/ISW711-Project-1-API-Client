@@ -4,8 +4,11 @@ import Footer from "./Footer.js";
 import HomeCard from './HomeCard.js';
 import axios from 'axios';
 import NewsSources from './NewsSources.js';
+import { useNavigate } from 'react-router-dom';
+import CategoryList from './CategoryList.js';
 
 const Home = () => {
+  const navigate = useNavigate();
   const [news, setNews] = useState([]);
 
   useEffect(()=> {
@@ -39,6 +42,7 @@ const Home = () => {
   return (
     <div class="container">
     <Header/>
+    <CategoryList/>
      <h2>Your Unique News Cover</h2>
      {
       news.length ? (
@@ -52,7 +56,7 @@ const Home = () => {
           />))
       ) : 
       (
-        <NewsSources/>
+       navigate("/news-sources")
       )
      }
      <Footer/>

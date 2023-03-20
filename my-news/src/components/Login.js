@@ -1,52 +1,92 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
 import user from "../images/user.png";
 import email from "../images/email.jpg";
 import password from "../images/password.png";
 
-
 const userInicial = {
   email: "",
-  password: ""
-}
+  password: "",
+};
 
 const Login = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useState(userInicial);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [err, setErr] = useState({});
 
   const handleChangeInput = (e) => {
     setLogin({
       ...login,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
-  }
-
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:4000/api/auth/",{
-      email: login.email,
-      password: login.password
-    },{
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then((res) => {
-      console.log(res.data.data.token);
-      sessionStorage.setItem("loginToken", JSON.stringify(res.data.data.token));
-      sessionStorage.setItem("userConect", JSON.stringify(res.data.data.user._id));
-      navigate("/home");
-    })
-    .catch((err)=>{
-      console.log(err.response.status)
-      if(err.response.status === 404) setError('Sorry, no account was found with that information. Please check your credentials and try again.');
-      else if (err.response.status === 403) setError('The email or password is incorrect. Please verify your information and try again.');
-    })
-  }
+    const errors = validateForm(login);
+    if (Object.keys(errors).length === 0) {
+      axios
+        .post(
+          "http://localhost:4000/api/auth/",
+          {
+            email: login.email,
+            password: login.password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.data.data);
+          sessionStorage.setItem(
+            "loginToken",
+            JSON.stringify(res.data.data.token)
+          );
+          sessionStorage.setItem(
+            "userConect",
+            JSON.stringify(res.data.data.user._id)
+          );
+          sessionStorage.setItem(
+            "roleUser",
+            JSON.stringify(res.data.data.user.role[0])
+          );
+          navigate("/home");
+        })
+        .catch((err) => {
+          console.log(err.response.status);
+          if (err.response.status === 404)
+            setError(
+              "Sorry, no account was found with that information. Please check your credentials and try again."
+            );
+          else if (err.response.status === 403)
+            setError(
+              "The email or password is incorrect. Please verify your information and try again."
+            );
+        });
+    } else {
+      setErr(errors);
+      console.log(errors);
+    }
+  };
+
+  const validateForm = (values) => {
+    let errors = {};
+
+    if (!values.password) {
+      errors.password = "Password is required";
+    }
+    if (!values.email) {
+      errors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+      errors.email = "Email is invalid";
+    }
+    return errors;
+  };
 
   const handleRegister = (e) => navigate("/register");
 
@@ -61,16 +101,33 @@ const Login = () => {
         <form>
           <h1>User Login</h1>
           <img src={email} alt="email" className="email" />
-          <input type="text" placeholder="Email Address" className="name" name="email" onChange={handleChangeInput} />
+          <input
+            type="text"
+            placeholder="Email Address"
+            className="name"
+            name="email"
+            onChange={handleChangeInput}
+          />
+          {err.email && <div>{err.email}</div>}
           <div className="second-input">
             <img src={password} alt="pass" className="email" />
-            <input type="password" placeholder="Password" className="name" name="password" onChange={handleChangeInput}/>
+            <input
+              type="password"
+              placeholder="Password"
+              className="name"
+              name="password"
+              onChange={handleChangeInput}
+            />
+            {err.password && <div>{err.password}</div>}
           </div>
           {error && <div>{error}</div>}
           <button onClick={handleLogin}>Login</button>
         </form>
         <p>
-          If you don't have an account, <a href="register" onClick={handleRegister}>sign up here.</a>
+          If you don't have an account,{" "}
+          <a href="register" onClick={handleRegister}>
+            sign up here.
+          </a>
         </p>
       </div>
     </div>
