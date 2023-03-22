@@ -121,7 +121,7 @@ const NewsSave = () => {
     <div class="container">
       <Header />
       <h2>News source</h2>
-      <p>-----------------------------------</p>
+      <div className="category-edit-c">
       <input
         type="text"
         placeholder="Name"
@@ -140,7 +140,7 @@ const NewsSave = () => {
       />
        {err.url && <div>{err.url}</div>}
       <br />
-      <select key={Math.random() * 1000}>
+      <select className="i_sources" key={Math.random() * 1000}>
         {categories.length ? (
           categories.map((ele) => (
             <option data-id={ele._id} onClick={handleSelect}>
@@ -151,13 +151,13 @@ const NewsSave = () => {
           <option>Category</option>
         )}
       </select>
-      <p>-----------------------------------</p>
-      <button id="b_buscador" onClick={handleBtn}>
+      <button className="b_newsources" onClick={handleBtn}>
         Add
       </button>
-      <button id="b_buscador" onClick={handleCancel}>
+      <button className="b_newsources" onClick={handleCancel}>
         Cancel
       </button>
+      </div>
       <Footer />
     </div>
   );

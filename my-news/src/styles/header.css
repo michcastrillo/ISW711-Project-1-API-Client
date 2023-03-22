@@ -38,10 +38,9 @@ nav select {
     border-color: grey;
     padding: 5px;
 }
-.container select {
+.header_select {
     width: 182px;
     margin-top: -34px;
-    /* margin-bottom: 12px; */
     padding: 9px;
     margin-right: 19px;
 }

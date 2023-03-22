@@ -100,23 +100,25 @@ const CategoriesEditing = () => {
     <div class="container">
       <Header />
       <h2>Categories</h2>
-      <p>-----------------------------------</p>
-      <input
-        type="text"
-        placeholder="Name"
-        name="name"
-        value={category.name}
-        onChange={handleInput}
-        required
-      />
-      {err.name && <div>{err.name}</div>}
-      <p>-----------------------------------</p>
-      <button id="b_buscador" onClick={handleEdit}>
-        Edit
-      </button>
-      <button id="b_buscador" onClick={handleCancel}>
-        Cancel
-      </button>
+      <div className="category-edit-c">
+        <input
+          id= "i_category-edit"
+          type="text"
+          placeholder="Name"
+          name="name"
+          value={category.name}
+          onChange={handleInput}
+          required
+        /><br/>
+        {err.name && <div>{err.name}</div>}
+        
+        <button className="buttonCategoryEdit" onClick={handleEdit}>
+          Edit
+        </button>
+        <button className="buttonCategoryEdit" onClick={handleCancel}>
+          Cancel
+        </button>
+      </div>
       <Footer />
     </div>
   );

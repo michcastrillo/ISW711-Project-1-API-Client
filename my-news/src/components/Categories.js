@@ -68,34 +68,37 @@ const Categories = () => {
     <div class="container">
       <Header />
       <h2>Categories</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Category</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categories.length ? (
-            categories.map((dato) => (
-              <tr key={Math.random() * 1000}>
-                <td>{dato.name}</td>
-                <td>
-                  <button name="Edit" data-id={dato._id} onClick={handleEdit}>
-                    Edit
-                  </button>{" "}
-                  <button data-id={dato._id} onClick={handleDelete}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>Add a category</tr>
-          )}
-        </tbody>
-      </table>
-      <button id="b_buscador" name="Add" onClick={handleAdd}>
+      <div className="centrada">
+        <table className="t_categories">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categories.length ? (
+              categories.map((dato) => (
+                <tr key={Math.random() * 1000}>
+                  <td>{dato.name}</td>
+                  <td>
+                    <button class="buttonCategory" name="Edit" data-id={dato._id} onClick={handleEdit}>
+                      Edit
+                    </button><br/>
+                    <button class="buttonCategory" data-id={dato._id} onClick={handleDelete}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+            
+              ))
+            ) : (
+              <tr>Add a category</tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      <button id="b_category" name="Add" onClick={handleAdd}>
         Add new
       </button>
       <Footer />

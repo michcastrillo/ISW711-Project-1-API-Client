@@ -78,7 +78,7 @@ const CategoriesSave = () => {
     <div class="container">
       <Header />
       <h2>Categories</h2>
-      <p>-----------------------------------</p>
+      <div className="category-edit-c">
       <input
         type="text"
         placeholder="Name"
@@ -87,13 +87,14 @@ const CategoriesSave = () => {
         required
       />
       {err.name && <div>{err.name}</div>}
-      <p>-----------------------------------</p>
-      <button id="b_buscador" onClick={handleSave}>
+     
+      <button className="b_newsources" onClick={handleSave}>
         Save
       </button>
-      <button id="b_buscador" onClick={handleCancel}>
+      <button className="b_newsources" onClick={handleCancel}>
         Cancel
       </button>
+      </div>
       <Footer />
     </div>
   );

@@ -113,61 +113,61 @@ const Register = () => {
 
   return (
     <div className='wrapper'>
-      <form>
+
       <h1>User Registration</h1>
         <p>----------------------------------------------------------------------</p>
-        <input className="input_register" type="text"  placeholder="First Name" name='firstName' onChange={handleChangeInput} required/>
-        {error.firstName && <div>{error.firstName}</div>}
-        <input className="input_register"  type="text" placeholder="Last Name" name='lastName' onChange={handleChangeInput} required/><br/>
-        {error.lastName && <div>{error.lastName}</div>}
-        <input className="input_register" type="email" placeholder="Email Address" name="email" onChange={handleChangeInput} required/>
-        {error.email && <div>{error.email}</div>}
-        <input className="input_register" type="password" placeholder="Password" name="password" onChange={handleChangeInput} required/><br/>
-        {error.password && <div>{error.password}</div>}
-        <input className="addresses" type="text" placeholder="Address" name="addressOne" onChange={handleChangeInput} required/><br/>
-        {error.addressOne && <div>{error.addressOne}</div>}
-        <input className="addresses" type="text" placeholder="Address 2" name="addressTwo" onChange={handleChangeInput} required/><br/>
-        {error.addressTwo && <div>{error.addressTwo}</div>}
-        <select id="country_select" name='country' onChange={handleChangeInput}>
-            <option>Country</option>
-            <option>Argentina</option>
-            <option>Bolivia</option>
-            <option>Brasil</option>
-            <option>Chile</option>
-            <option>Colombia</option>
-            <option>Costa Rica</option>
-            <option>Cuba</option>
-            <option>Ecuador</option>
-            <option>El Salvador</option>
-            <option>Guayana Francesa</option>
-            <option>Granada</option>
-            <option>Guatemala</option>
-            <option>Guayana</option>
-            <option>Haití</option>
-            <option>Honduras</option>
-            <option>Jamaica</option>
-            <option>México</option>
-            <option>Nicaragua</option>
-            <option>Paraguay</option>
-            <option>Panamá</option>
-            <option>Perú</option>
-            <option>Puerto Rico</option>
-            <option>República Dominicana</option>
-            <option>Surinam</option>
-            <option>Uruguay</option>
-            <option>Venezuela</option>
-        </select>
-        {error.country && <div>{error.country}</div>}
-        <input className="input_register" type="text" placeholder="City" name="city" onChange={handleChangeInput} required/><br/>
-        {error.city && <div>{error.city}</div>}
-        <input className="input_register" type="text" placeholder="Zip/Postal Code" name="postalCode" onChange={handleChangeInput}  required/>
-        {error.postalCode && <div>{error.postalCode}</div>}
-        <input className="input_register" type="tel" placeholder="Phone Number" name="phoneNumber" onChange={handleChangeInput} required/>
-        {error.phoneNumber && <div>{error.phoneNumber}</div>}
+          <input className="input_register" type="text"  placeholder="First Name" name='firstName' onChange={handleChangeInput} required/>
+          <input className="input_register"  type="text" placeholder="Last Name" name='lastName' onChange={handleChangeInput} required/><br/>
+          {error.firstName && <div>{error.firstName}</div>}
+          {error.lastName && <div>{error.lastName}</div>}
+          <input className="input_register" type="email" placeholder="Email Address" name="email" onChange={handleChangeInput} required/>          
+          <input className="input_register" type="password" placeholder="Password" name="password" onChange={handleChangeInput} required/>
+          {error.email && <div>{error.email}</div>}
+          {error.password && <div>{error.password}</div>}
+          <br/><input className="addresses" type="text" placeholder="Address" name="addressOne" onChange={handleChangeInput} required/>
+          {error.addressOne && <div>{error.addressOne}</div>}
+          <br/><input className="addresses" type="text" placeholder="Address 2" name="addressTwo" onChange={handleChangeInput}/>
+          {error.addressTwo && <div>{error.addressTwo}</div>}
+          <br/><select id="country_select" name='country' onChange={handleChangeInput} required>
+              <option>Country</option>
+              <option>Argentina</option>
+              <option>Bolivia</option>
+              <option>Brasil</option>
+              <option>Chile</option>
+              <option>Colombia</option>
+              <option>Costa Rica</option>
+              <option>Cuba</option>
+              <option>Ecuador</option>
+              <option>El Salvador</option>
+              <option>Guayana Francesa</option>
+              <option>Granada</option>
+              <option>Guatemala</option>
+              <option>Guayana</option>
+              <option>Haití</option>
+              <option>Honduras</option>
+              <option>Jamaica</option>
+              <option>México</option>
+              <option>Nicaragua</option>
+              <option>Paraguay</option>
+              <option>Panamá</option>
+              <option>Perú</option>
+              <option>Puerto Rico</option>
+              <option>República Dominicana</option>
+              <option>Surinam</option>
+              <option>Uruguay</option>
+              <option>Venezuela</option>
+          </select>         
+          <input className="input_register" type="text" placeholder="City" name="city" onChange={handleChangeInput} required/>
+          {error.country && <div>{error.country}</div>}
+          {error.city && <div>{error.city}</div>}
+          <br/><input className="input_register" type="text" placeholder="Zip/Postal Code" name="postalCode" onChange={handleChangeInput}  required/>
+          <input className="input_register" type="tel" placeholder="Phone Number" name="phoneNumber" onChange={handleChangeInput} required/>
+          {error.postalCode && <div>{error.postalCode}</div>}
+          {error.phoneNumber && <div>{error.phoneNumber}</div>}
         <p>----------------------------------------------------------------------</p> 
         {errorServer && <div>{errorServer}</div>}
         <button id="b_buscador" onClick={handleRegister}>Sign up</button>
-      </form>
+     
     </div>
   )
 }

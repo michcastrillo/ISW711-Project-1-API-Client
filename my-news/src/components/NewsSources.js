@@ -74,7 +74,8 @@ const NewsSources = () => {
     <div class="container">
       <Header />
       <h2>News Sources</h2>
-      <table>
+      
+      <table className="t_newsource">
         <thead>
           <tr>
             <th>Name</th>
@@ -89,7 +90,7 @@ const NewsSources = () => {
                 <td>{dato.name}</td>
                 <td>{dato.nameCategory}</td>
                 <td>
-                  <button name="Edit" data-id={dato._id} onClick={handleEdit}>Edit</button> <button  data-id={dato._id} onClick= {handleDelete}>Delete</button>
+                  <button  name="Edit" data-id={dato._id} onClick={handleEdit}>Edit</button> <button data-id={dato._id} onClick= {handleDelete}>Delete</button>
                 </td>
               </tr>
             ))

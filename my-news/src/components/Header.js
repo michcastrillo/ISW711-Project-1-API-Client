@@ -52,7 +52,7 @@ const Header = () => {
             <h1 className="title_header">My News Cover</h1>
           </li>
           <li>
-            <select>
+            <select className="header_select">
               {roloUser && roloUser === "user"
                 ? userMenu.map((ele) => (
                     <option name={ele.nameT} onClick={handleOption}>

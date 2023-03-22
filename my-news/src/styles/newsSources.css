@@ -10,11 +10,19 @@ th {
     background-color: lightgray;
 }
 
-table{
+.t_newsource{
     width: 100%;
     margin-bottom: 34px;
+} 
+.b_newsources{
+    width: 138px;
+    margin-left: 2px;
 }
-/* h2{
-    border-bottom: solid;
-    border-width: 1px;
-} */
+.i_sources{
+    margin-top: 9px;
+    width: 275px;
+    margin-left: 3px;
+    border-radius: 21px;
+    height: 51px;
+    border: solid 2px;
+}

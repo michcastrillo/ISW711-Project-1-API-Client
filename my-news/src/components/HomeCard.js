@@ -4,7 +4,7 @@ import "../styles/homeCart.css"
 const HomeCard = ({imageSrc, title, description, date, link}) => {
   return (
     <div className="cart">
-    <img src={imageSrc} alt={title} />
+    <img id="img_category" src={imageSrc} alt={title} />
     <h2>{title}</h2>
     <p>{description}</p>
     <p>{date}</p>
