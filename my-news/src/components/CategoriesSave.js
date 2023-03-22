@@ -3,17 +3,19 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
+import "../styles/messajeError.css";
 
 const inicialCate = {
   name: "",
 };
 const CategoriesSave = () => {
   const navigate = useNavigate();
-  const userId = JSON.parse(sessionStorage.getItem("userConect")); //Get id user connect
+  // const userId = JSON.parse(sessionStorage.getItem("userConect")); //Get id user connect
   const tokenValue = JSON.parse(sessionStorage.getItem("loginToken")); // token
-  const categoryId = JSON.parse(sessionStorage.getItem("loginToken")); // Get category id
+  // const categoryId = JSON.parse(sessionStorage.getItem("loginToken")); // Get category id
   const [category, setCategory] = useState(inicialCate);
   const [err, setErr] = useState({});
+  const [errorServer, setErrorServer] = useState("");
 
   const handleInput = (e) => {
     setCategory({
@@ -42,19 +44,14 @@ const CategoriesSave = () => {
         })
         .catch((err) => {
           if (err.response) {
-            console.log(err.response.status);
-            if (err.response.status === 403) {
-              //sin permisos
+            const statusErr = err.response.status;
+            if (statusErr === 409) {
+              setErrorServer(err.response.data.error);
+            }else if (statusErr === 403) {
               navigate("/home");
-            } else if (err.response.status === 401) {
+            }else if (statusErr === 401) {
               navigate("/login");
-            } else {
-              console.log(err.response.data.message);
             }
-          } else if (err.request) {
-            console.log("Network error:", err.request);
-          } else {
-            console.log("Unexpected error:", err.message);
           }
         });
     } else {
@@ -75,7 +72,7 @@ const CategoriesSave = () => {
   };
 
   return (
-    <div class="container">
+    <div className="container">
       <Header />
       <h2>Categories</h2>
       <div className="category-edit-c">
@@ -86,8 +83,8 @@ const CategoriesSave = () => {
         onChange={handleInput}
         required
       />
-      {err.name && <div>{err.name}</div>}
-     
+      {err.name && <div className="error">{err.name}</div>}
+      {errorServer && <div className="error">{errorServer}</div>}
       <button className="b_newsources" onClick={handleSave}>
         Save
       </button>

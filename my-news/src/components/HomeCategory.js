@@ -5,6 +5,8 @@ import CategoryList from "./CategoryList";
 import Footer from "./Footer";
 import Header from "./Header";
 import HomeCard from "./HomeCard";
+import "../styles/home.css"
+
 
 const HomeCategory = () => {
   const navigate = useNavigate();
@@ -40,10 +42,11 @@ const HomeCategory = () => {
     return formatDate;
   }
   return (
-    <div>
-      <Header />
-      <CategoryList />
+    <div className="container">
+      <Header key={Math.random()*1000} />
+      <CategoryList key={Math.random()*1000}/>
       <h2>Your Unique News Cover</h2>
+      <div className="conteiner-cart">
       {news.length
         ? news.map((element) => (
             <HomeCard
@@ -56,6 +59,7 @@ const HomeCategory = () => {
             />
           ))
         : (<p>There is no information about this category</p>)}
+      </div>
       <Footer />
     </div>
   );

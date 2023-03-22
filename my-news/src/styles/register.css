@@ -21,3 +21,6 @@ input{
 #alertas div{
     display: inline-block;
 }
+#b_buscador{
+    margin: 2px;
+}

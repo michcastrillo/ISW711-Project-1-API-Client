@@ -3,9 +3,9 @@ import Header from "./Header.js";
 import Footer from "./Footer.js";
 import HomeCard from './HomeCard.js';
 import axios from 'axios';
-import NewsSources from './NewsSources.js';
 import { useNavigate } from 'react-router-dom';
 import CategoryList from './CategoryList.js';
+import "../styles/home.css"
 
 const Home = () => {
   const navigate = useNavigate();
@@ -40,10 +40,11 @@ const Home = () => {
   }
 
   return (
-    <div class="container">
-    <Header/>
+    <div className="container">
+    <Header key={Math.random()*1000}/>
     <CategoryList/>
      <h2>Your Unique News Cover</h2>
+     <div className="conteiner-cart">
      {
       news.length ? (
         news.map(element=> (<HomeCard
@@ -59,6 +60,7 @@ const Home = () => {
        navigate("/news-sources")
       )
      }
+     </div>
      <Footer/>
     </div>
   )

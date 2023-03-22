@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../styles/categoryList.css"
 
 const CategoryList = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const CategoryList = () => {
   }
 
   return (
-    <div>
+    <div className="conteiner-list">
       <h3>Categories</h3>
       <ul>
         {categories.map((category, index) => (

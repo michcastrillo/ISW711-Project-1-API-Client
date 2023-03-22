@@ -71,8 +71,8 @@ const NewsSources = () => {
   }
 
   return (
-    <div class="container">
-      <Header />
+    <div className="container">
+      <Header key={Math.random()*1000} />
       <h2>News Sources</h2>
       
       <table className="t_newsource">

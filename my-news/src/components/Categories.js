@@ -65,8 +65,8 @@ const Categories = () => {
   }
 
   return (
-    <div class="container">
-      <Header />
+    <div className="container">
+      <Header key={Math.random()*1000}/>
       <h2>Categories</h2>
       <div className="centrada">
         <table className="t_categories">
@@ -82,10 +82,10 @@ const Categories = () => {
                 <tr key={Math.random() * 1000}>
                   <td>{dato.name}</td>
                   <td>
-                    <button class="buttonCategory" name="Edit" data-id={dato._id} onClick={handleEdit}>
+                    <button className="buttonCategory" name="Edit" data-id={dato._id} onClick={handleEdit}>
                       Edit
                     </button><br/>
-                    <button class="buttonCategory" data-id={dato._id} onClick={handleDelete}>
+                    <button className="buttonCategory" data-id={dato._id} onClick={handleDelete}>
                       Delete
                     </button>
                   </td>

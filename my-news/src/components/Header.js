@@ -52,15 +52,16 @@ const Header = () => {
             <h1 className="title_header">My News Cover</h1>
           </li>
           <li>
+            <p>{"Connected: " + roloUser}</p>
             <select className="header_select">
               {roloUser && roloUser === "user"
                 ? userMenu.map((ele) => (
-                    <option name={ele.nameT} onClick={handleOption}>
+                    <option key={Math.random()*1000} name={ele.nameT} onClick={handleOption}>
                       {ele.opcion}
                     </option>
                   ))
                 : adminMenu.map((ele) => (
-                    <option name={ele.nameT} onClick={handleOption}>
+                    <option key={Math.random()*1000} name={ele.nameT} onClick={handleOption}>
                       {ele.opcion}
                     </option>
                   ))}

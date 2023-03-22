@@ -30,7 +30,10 @@ const Register = () => {
       [e.target.name]: e.target.value
     });
   }
-
+const handleCancel = (e) => {
+  e.preventDefault();
+  navigate("/login");
+}
   const handleRegister = (e) => {
     e.preventDefault();
     const errors = validateForm(register);
@@ -167,6 +170,7 @@ const Register = () => {
         <p>----------------------------------------------------------------------</p> 
         {errorServer && <div>{errorServer}</div>}
         <button id="b_buscador" onClick={handleRegister}>Sign up</button>
+        <button id="b_buscador" onClick={handleCancel}>Cancel</button>
      
     </div>
   )

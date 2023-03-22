@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/newsEditing.css";
+import "../styles/messajeError.css";
 import Header from "./Header.js";
 import Footer from "./Footer.js";
 import { useNavigate } from "react-router-dom";
@@ -14,12 +15,11 @@ const NewsEditing = () => {
 
   //Section category
   const [categories, setCategories] = useState([]);
-  //Section Edit
   const newSourceId = JSON.parse(sessionStorage.getItem("idNewSource")); //Get id new source to edit
-  const [dataEdit, setDataEdit] = useState([]);
   const [oneNewSource, setOneNewSource] = useState([]); //Get only the new source data to edit
   const [categoryId, setCategoryId] = useState("");
   const [err, setErr] = useState({});
+  const [errorServer, setErrorServer] = useState("");
 
   //Load categories
   useEffect(() => {
@@ -33,7 +33,7 @@ const NewsEditing = () => {
         if (error.response.status >= 400) setCategories([]);
       });
   }, []);
-
+  //Get data to edit
   useEffect(() => {
     const url = `http://localhost:4000/api/newsource/${userId}`;
     const config = {
@@ -43,7 +43,7 @@ const NewsEditing = () => {
       .get(url, config)
       .then((res) => {
         const dataEdit = res.data.data; // Guardar los datos de la API en una variable
-        setDataEdit(dataEdit);
+        // setDataEdit(dataEdit);
         const myObject = dataEdit.find((item) => item._id === newSourceId);
         setOneNewSource(myObject);
       })
@@ -52,16 +52,18 @@ const NewsEditing = () => {
       });
   }, []);
 
+  //Set infomacion to edit in inputs
   const handleInput = (e) => {
     const { name, value } = e.target;
     setOneNewSource({ ...oneNewSource, [name]: value });
   };
+  // //Set information in select
   const handleSelect = (e) => {
     e.preventDefault();
     console.log(e.target.dataset.id);
     setCategoryId(e.target.dataset.id);
   };
-
+  //Handle in btn edit
   const handleBtn = (e) => {
     e.preventDefault();
     const errors = validateForm(oneNewSource);
@@ -86,16 +88,12 @@ const NewsEditing = () => {
         })
         .catch((err) => {
           if (err.response) {
-            console.log(err.response.status);
-            if (err.response.status === 401) {
+            const statusErr = err.response.status;
+            if (statusErr === 404) {
+              setErrorServer(err.response.data.error);
+            } else if (statusErr === 401) {
               navigate("/login");
-            } else {
-              console.log(err.response.data.message);
             }
-          } else if (err.request) {
-            console.log("Network error:", err.request);
-          } else {
-            console.log("Unexpected error:", err.message);
           }
         });
     } else {
@@ -103,6 +101,7 @@ const NewsEditing = () => {
       console.log(errors);
     }
   };
+  //Handle btn cancel
   const handleCancel = (e) => {
     e.preventDefault();
     navigate("/news-sources");
@@ -114,6 +113,7 @@ const NewsEditing = () => {
   const handleSelectChange = (e) => {
     setSelectedOption(e.target.value);
   };
+  //Error handler on empty inputs 
   const validateForm = (values) => {
     let errors = {};
     if (!values.url) {
@@ -125,8 +125,8 @@ const NewsEditing = () => {
     return errors;
   };
   return (
-    <div class="container">
-      <Header />
+    <div className="container">
+      <Header key={Math.random() * 1000} />
       <h2>News source</h2>
       <p>-----------------------------------</p>
       <input
@@ -137,7 +137,7 @@ const NewsEditing = () => {
         value={oneNewSource.name}
         required
       />
-      {err.name && <div>{err.name}</div>}
+      {err.name && <div className="error">{err.name}</div>}
       <br />
       <input
         type="text"
@@ -147,7 +147,7 @@ const NewsEditing = () => {
         value={oneNewSource.url}
         required
       />
-      {err.url && <div>{err.url}</div>}
+      {err.url && <div className="error">{err.url}</div>}
       <br />
       <select value={selectedOption} onClick={handleSelectChange}>
         {categories.length ? (
@@ -160,6 +160,7 @@ const NewsEditing = () => {
           <option>Category</option>
         )}
       </select>
+      {errorServer && <div className="error">{errorServer}</div>}
       <p>-----------------------------------</p>
       <button id="b_buscador" onClick={handleBtn}>
         Edit

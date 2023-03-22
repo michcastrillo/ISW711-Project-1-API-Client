@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
+import "../styles/messajeError.css";
 import user from "../images/user.png";
 import email from "../images/email.jpg";
 import password from "../images/password.png";
@@ -58,15 +59,13 @@ const Login = () => {
           navigate("/home");
         })
         .catch((err) => {
-          console.log(err.response.status);
-          if (err.response.status === 404)
-            setError(
-              "Sorry, no account was found with that information. Please check your credentials and try again."
-            );
-          else if (err.response.status === 403)
-            setError(
-              "The email or password is incorrect. Please verify your information and try again."
-            );
+          if (err.response) {
+            const statusErr = err.response.status;
+            if (statusErr === 404) {
+              setError(err.response.data.error);
+            } else if (err.response.status === 401)
+              setError(err.response.data.error);
+          }
         });
     } else {
       setErr(errors);
@@ -108,7 +107,7 @@ const Login = () => {
             name="email"
             onChange={handleChangeInput}
           />
-          {err.email && <div>{err.email}</div>}
+          {err.email && <div className="error">{err.email}</div>}
           <div className="second-input">
             <img src={password} alt="pass" className="email" />
             <input
@@ -118,9 +117,9 @@ const Login = () => {
               name="password"
               onChange={handleChangeInput}
             />
-            {err.password && <div>{err.password}</div>}
+            {err.password && <div className="error">{err.password}</div>}
           </div>
-          {error && <div>{error}</div>}
+          {error && <div className="error">{error}</div>}
           <button onClick={handleLogin}>Login</button>
         </form>
         <p>
